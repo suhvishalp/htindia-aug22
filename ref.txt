@@ -1,0 +1,283 @@
+Environment Setup 
+    - JDK 11 later 
+    - Eclipse / STS (spring tool suite 4) / Intelij Idea 
+    - MySQL community edition 
+    - AWS free tier account 
+    - AWS CLI 2.x.x
+    - AWS toolkit in STS / Eclipse 
+    - Postman 
+
+Language                    Library / Package                   Framework 
+
+Java                        util, io, jdbc, lang                Spring 
+                            gson
+
+Python                      math                                Django / flask 
+
+javascript
+
+C# / VB                     //                                  .net framework 
+
+Go 
+
+Swift 
+
+
+   |                        |                                       |
+Programming             Simplifies the                      standaridize the process 
+Capabilities            task 
+
+
+Dependency Management tools 
+    - maven 
+    - gradle 
+
+
+
+
+
+
+- Spring Framework 
+    - Spring Core 
+    - Spring Web 
+    - Spring Data  
+    - Spring REST 
+    - Spring Security 
+    - Spring Cloud
+
+    - Pojo 
+    - Java beans 
+    - BO 
+    - DAO 
+    - DTO 
+    - SO
+
+    - 
+
+
+
+    - IOC - Inversion of control 
+        - the process of delegating the responsibility of creating the objects 
+        - container in spring will be resposible to manage objects 
+
+    - Spring Bean 
+        - A bean is an object that is instantiated, assembled, and otherwise managed 
+            by a Spring IoC container.
+
+
+    - Bean Definition 
+            - using xml configuration 
+
+                <bean id="jdbcAccountRepoImpl" class="com.demo.dao.JdbcAccountRepositoryImpl">
+                </bean>
+
+                <bean id="" class="">
+                    <property name="" value=" />
+                </bean>
+
+            - using java configuration 
+
+
+                @Configuration
+                public class MyConfiguration {
+
+                    @Bean
+                    public JdbcAccountRepositoryImpl getJdbcAccountRepositoryImpl(){
+                        //code to construct an object of JdbcAccountRepositoryImpl
+
+                        return new JdbcAccountRepositoryImpl-.-.-);
+                    }
+
+                    @Bean
+                    public BasicDataSource getBasicDataSource(){
+                        	BasicDataSource dataSource= new BasicDataSource();
+                            dataSource.setUrl("jdbc:mysql://localhost/springdb");
+                            dataSource.setUsername("root");
+                            dataSource.setPassword("root");
+                            dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+
+                            return dataSource;
+                    }
+                }
+                    
+
+            - using annotations 
+
+                        @Component
+                        public class JdbcAccountRepositoryImpl implements AccountRepository {
+	
+                                //...
+
+                        }
+https://github.com/suhvishalp/htindia-aug22
+
+
+interface Talented {
+    public abstract void sing();
+}
+
+class TalentedStudent implements Talented {
+
+    public void sing(){
+        //...
+    }
+}
+
+Talented talented = new TalentedStudent();
+
+
+Data Access 
+----------------
+
+    - JDBC 
+    - ORM tools - Object Relational mapping 
+        - Hibernate 
+        - Ibatis
+        - Toplink
+
+        - Map the java object with a relational table 
+
+        class Employee {
+            //properties 
+        }
+
+    - JPA - Java Persistence API 
+            - standard / specification for ORM Tool  
+
+    - JPA Providers 
+            - Hibernate JPA 
+            - EclipseLink 
+            - Mybatis
+
+
+    - Entity 
+            - the object which is managed / persisted by JPA Provider 
+
+    - EntityManager 
+            - object which performs persistence operations
+
+    - JPQL 
+
+    - Spring Data JPA 
+        - Wrapper around JPA, JPA Provider (Hibernate) and provides "Repository" pattern 
+            to perform persistence operation 
+
+
+        JPA                 Hibernate JPA           Spring DATA JPA 
+
+    @Component 
+
+    @Service 
+
+    @Repository
+
+    @Controller 
+
+
+
+Spring Data JPA 
+    - offers repository pattern 
+
+            interface Repository<T, ID>
+                 |
+                 |-->Marker interface, doesn't contain any method 
+                 |
+            interface CrudRepository<T, ID>
+                |
+                |--> long	count()
+                |--> void	delete(T entity)
+                |--> void	deleteAll()
+                |--> <S extends T> S	save(S entity)
+                |--> Iterable<T>	findAll()
+                |--> Optional<T>	findById(ID id)
+                |
+                |
+        interface PagingAndSortingRepository<T, ID>
+                |
+                |-> Page<T>	findAll(Pageable pageable)
+                |-> Iterable<T>	findAll(Sort sort)
+                |
+                |
+        interface JpaRepository<T, ID>
+                |
+                |--> List<T>	findAll(Sort sort) 
+                |-->saveAll(Iterable<S> entities) 
+
+
+   Fetch records using Spring data jpa 
+    -----------------
+
+        1. use the findById(), findAll() methods provided by Repository interface 
+
+        2. use the query generation method 
+            i.e. 
+            List<Movie> findAllByDescription(String desc)
+            List<Movie> findAllByPriceGreatherThan(int price)
+
+        3. write custom query statements 
+
+            //	@Query(value = "SELECT m FROM MOVIE m where m.price >= :price")
+            //	List<Movie> getAllMoviesByPrice(@Param("price") int price);
+
+                @Query(value = "SELECT * from movie where price >= :price", nativeQuery = true)
+                List<Movie> getAllMoviesByPrice(@Param("price") int price);
+
+        4. QueryDSL
+            - https://www.baeldung.com/intro-to-querydsl
+            - https://www.baeldung.com/querydsl-with-jpa-tutorial
+
+
+https://225865359764.signin.aws.amazon.com/console
+
+
+
+    1. create aws free tier account 
+    2. create an IAM user account with "Administrator Access" policy 
+    3. sign in with the IAM user 
+    4. create a code commit repository 
+    5. generate "HTTPS Git credentials for AWS CodeCommit"
+
+
+
+State = Data 
+Transfer = 
+
+
+http method                URI Path                 Status Code             description 
+GET                     /api/movies                 200                     get all movies 
+
+GET                     /api/movies/{id}            200                     get the movie with the given id 
+                        http://localhost:8080/api/movies/1
+
+POST                    /api/movies                 201                     create a new movie 
+                        request body
+                         {
+                             title : "xxxx",
+                             description : "XXXXX",
+                             price : XX
+                         }
+
+PUT                     /api/movies/{id}            200                     update movie with the latest data 
+                        {
+                             title : "xxxx",
+                             description : "XXXXX",
+                             price : XX
+                         }
+
+DELETE                  /api/movies/{id}            200                     delete the movie with given id 
+
+
+
+ResponseEntity
+-----------------
+    - https://www.baeldung.com/spring-response-entity
+    - ResponseEntity object is used to set the body,
+         status, and headers to an HTTP response.
+
+@ResponseStatus 
+-----------------
+    https://www.baeldung.com/spring-response-status
+
+DTO 
+-----
+    https://www.baeldung.com/java-dto-pattern
