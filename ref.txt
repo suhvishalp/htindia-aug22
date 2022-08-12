@@ -371,9 +371,42 @@ Code Deploy
                                     wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
                             
                             d. attach the role to EC2 
+                                    -> Select the Instance --> ACtion --> Security --> Modify IAM Role 
+
+
+            Configure Code Deploy Project 
+            ------------------------------
+                - Create a new Application 
+                - Create a new Deployment Group 
+
 
 Code Pipeline 
 
 
 Load Balancer 
 Auto Scaling 
+
+
+Data JPA - Relationships / inheritance / transaction management 
+
+REST - Relationships / Secure api endpoints / custom headers / consuming other REST services 
+            Swagger 
+
+Spring Security 
+
+Spring Cloud 
+    - Config Server 
+    - Eureka 
+    - 
+
+Docker 
+
+Containerization 
+
+ECS 
+
+
+"https://www.linkedin.com/learning/paths/become-a-spring-developer?u=2146730
+https://www.linkedin.com/learning/aws-essential-training-for-developers
+https://www.linkedin.com/learning/microservices-foundations
+"
