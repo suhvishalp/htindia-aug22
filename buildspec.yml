@@ -16,4 +16,9 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - 'target/movie-service.war'
+    - 'target/ccdemo.war'
+    - 'appspec.yml'
+    - 'scripts/before_install.sh'
+    - 'scripts/after_install.sh'    
+    - 'scripts/start_server.sh'
+    - 'scripts/stop_server.sh'

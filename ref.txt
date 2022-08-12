@@ -331,10 +331,15 @@ Connect to the EC2 instance & install the appropriate run time
 https://techviewleo.com/install-tomcat-on-amazon-linux/
 
 
+Deploy war file to EC2 manually 
+------------------------------------
+1. connect to EC2 
+2. execute below commands 
 
+        sudo su                         //swich to super user 
+        cd /usr/share/tomcat/webapps    //navigate to root directory of tomcat 
 
-
-
+        wget <<warfileurl>>
 
 
 User Data Scripts 
@@ -350,6 +355,22 @@ IAM Roles
 IAM Policy
 
 Code Deploy 
+--------------
+        - pre-requisites 
+                    1. Create a new Role for code-deploy service 
+                            - go to IAM and create a new role for code-deploy
+
+                    2. create a new role for EC2 instance  
+
+                    3. create EC2 instance with below things installed 
+                            a. jre 
+                            b. tomcat 
+                            c. codedeploy-agent
+                                    - https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-install-linux.html
+
+                                    wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
+                            
+                            d. attach the role to EC2 
 
 Code Pipeline 
 
