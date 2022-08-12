@@ -281,3 +281,78 @@ ResponseEntity
 DTO 
 -----
     https://www.baeldung.com/java-dto-pattern
+    - DTOs or Data Transfer Objects are objects that carry data between processes in order to reduce the number of methods calls. 
+
+DTO Mapper 
+----------
+    - https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
+
+
+Validation API / Hibernate validator 
+-----------------
+    - https://www.baeldung.com/spring-boot-bean-validation 
+
+
+    Spring Cloud Config
+    -----------------------
+        - Centralize configuration 
+
+    Spring Cloud Netflix
+    ---------------------
+        - 
+
+
+        
+EC2 - Elastic Compute Cloud 
+--------------------------------
+  - offeres virtualized hardware
+  - create virtual machine 
+      - 1. Choose AMI - Amazon machine image
+            - tempalte for installing OS, software
+            - An AMI is a template that contains the software configuration (operating system, application server, and applications) required to launch your instance. Search or Browse for AMIs if you don’t see what you are looking for below'
+
+      - 2. Choose Instance Type
+              - Memory 
+              - vCPUs
+        3. choose Storage
+        4. Create / Choose a Security group 
+                SSH             22      0.0.0.0/0
+                Custom TCP      8080    0.0.0.0.0
+
+        5. Create / Choose Key Pair
+
+
+Connect to the EC2 instance & install the appropriate run time 
+------------------------------------------------------------------
+
+    1. Install JRE 11 
+    2. Install Tomcat 9 
+
+https://techviewleo.com/install-tomcat-on-amazon-linux/
+
+
+
+
+
+
+
+
+User Data Scripts 
+
+Security Groups 
+  - specify firewall rules for communication 
+
+
+IAM User
+
+IAM Roles
+
+IAM Policy
+
+Code Deploy 
+
+Code Pipeline 
+
+
+Load Balancer 
+Auto Scaling 
