@@ -387,26 +387,34 @@ Load Balancer
 Auto Scaling 
 
 
-Data JPA - Relationships / inheritance / transaction management 
+1. Docker
 
-REST - Relationships / Secure api endpoints / custom headers / consuming other REST services 
-            Swagger 
+        a. docker compose 
 
-Spring Security 
 
-Spring Cloud 
+
+2. Spring Cloud 
     - Config Server 
     - Eureka 
-    - 
+    - openfeign / communication between microservices 
 
-Docker 
+3. Data JPA - Relationships / inheritance / transaction management 
 
-Containerization 
+4. REST - Relationships / Secure api endpoints / custom headers / consuming other REST services 
+            Swagger 
 
-ECS 
+5. Spring Security 
+
+6. ECS 
+
+
+
 
 
 "https://www.linkedin.com/learning/paths/become-a-spring-developer?u=2146730
 https://www.linkedin.com/learning/aws-essential-training-for-developers
 https://www.linkedin.com/learning/microservices-foundations
 "
+
+
+
