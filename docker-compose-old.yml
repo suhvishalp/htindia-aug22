@@ -3,28 +3,28 @@ version: "3.8"
 services:
 
   accounts:
-    image: eazybytes/accounts:latest
+    image: visbank/accounts
     mem_limit: 700m
     ports:
       - "8080:8080"
     networks:
-      - eazybank-network
+      - visbank-network
     
   loans:
-    image: eazybytes/loans:latest
+    image: visbank/loans
     mem_limit: 700m
     ports:
       - "8090:8090"
     networks:
-      - eazybank-network
+      - visbank-network
     
   cards:
-    image: eazybytes/cards:latest
+    image: visbank/cards
     mem_limit: 700m
     ports:
       - "9000:9000"
     networks:
-      - eazybank-network
+      - visbank-network
     
 networks:
-  eazybank-network:
+  visbank-network:
