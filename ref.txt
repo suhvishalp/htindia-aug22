@@ -416,5 +416,33 @@ https://www.linkedin.com/learning/aws-essential-training-for-developers
 https://www.linkedin.com/learning/microservices-foundations
 "
 
+            - Docker 
+                - it is a tool that offers Containerization
+
+            - Docker Image 
+                - Self executable package containing your code, dependencies, library, runtime
+                         & tools inside a single unit 
+
+            - once a docker image is created, we can store it to any repository 
+                    i.e. dockerhub 
+                         AWS Container Registry 
+
+            - Container 
+                - instance of a docker image that executes the application in an isolated env. 
 
 
+            1. how to package a spring boot application into docker image (JAR / WAR)
+                    - a. using Dockerfile 
+                            - compile the project manually 
+                            - execute the .jar file manually 
+                                    > java -jar accounts-0.0.1-SNAPSHOT.jar
+
+                            > build docker image 
+                                > docker build -t visbank/accounts .
+
+                    - b. using buildpacks / packeto
+                    - c. using codebuild 
+
+
+            2. how to push the docker image to repository i.e. dockerhub / AWS container registry   
+            3. how to run a container 
