@@ -391,11 +391,12 @@ Auto Scaling
 
         a. docker compose 
 
-
-
 2. Spring Cloud 
-    - Config Server 
-    - Eureka 
+    - Spring Cloud Config Server        - Centralized configuration 
+    - Spring Cloud Netflix Eureka       - Service discovery & Service Registry 
+                                            - etcd 
+                                            - consul 
+                                            
     - openfeign / communication between microservices 
 
 3. Data JPA - Relationships / inheritance / transaction management 
