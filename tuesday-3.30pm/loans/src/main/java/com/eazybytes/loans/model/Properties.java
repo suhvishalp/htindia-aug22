@@ -6,8 +6,7 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 public class Properties {
 
 	private String msg;
@@ -21,5 +20,45 @@ public class Properties {
 		this.mailDetails = mailDetails;
 		this.activeBranches = activeBranches;
 	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public String getBuildVersion() {
+		return buildVersion;
+	}
+
+	public void setBuildVersion(String buildVersion) {
+		this.buildVersion = buildVersion;
+	}
+
+	public Map<String, String> getMailDetails() {
+		return mailDetails;
+	}
+
+	public void setMailDetails(Map<String, String> mailDetails) {
+		this.mailDetails = mailDetails;
+	}
+
+	public List<String> getActiveBranches() {
+		return activeBranches;
+	}
+
+	public void setActiveBranches(List<String> activeBranches) {
+		this.activeBranches = activeBranches;
+	}
+
+	@Override
+	public String toString() {
+		return "Properties [msg=" + msg + ", buildVersion=" + buildVersion + ", mailDetails=" + mailDetails
+				+ ", activeBranches=" + activeBranches + "]";
+	}
+	
+	
 
 }

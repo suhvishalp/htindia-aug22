@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @Setter @ToString
 public class Customer {
 
 	@Id
@@ -26,5 +25,42 @@ public class Customer {
 	private String mobileNumber;
 	@Column(name = "create_dt")
 	private LocalDate createDt;
+	public int getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	public LocalDate getCreateDt() {
+		return createDt;
+	}
+	public void setCreateDt(LocalDate createDt) {
+		this.createDt = createDt;
+	}
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", name=" + name + ", email=" + email + ", mobileNumber="
+				+ mobileNumber + ", createDt=" + createDt + "]";
+	}
+	
+	
 
 }

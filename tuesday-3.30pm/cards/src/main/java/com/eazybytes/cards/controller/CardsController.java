@@ -46,12 +46,10 @@ public class CardsController {
 	}
 	
 	@GetMapping("/cards/properties")
-	public String getPropertyDetails() throws JsonProcessingException {
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+	public Properties getPropertyDetails() throws JsonProcessingException {
 		Properties properties = new Properties(cardsConfig.getMsg(), cardsConfig.getBuildVersion(),
 				cardsConfig.getMailDetails(), cardsConfig.getActiveBranches());
-		String jsonStr = ow.writeValueAsString(properties);
-		return jsonStr;
+		return properties;
 	}
 
 }

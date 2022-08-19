@@ -52,12 +52,10 @@ public class AccountsController {
 	}
 	
 	@GetMapping("/account/properties")
-	public String getPropertyDetails() throws JsonProcessingException {
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+	public Properties getPropertyDetails() throws JsonProcessingException {
 		Properties properties = new Properties(accountsConfig.getMsg(), accountsConfig.getBuildVersion(),
 				accountsConfig.getMailDetails(), accountsConfig.getActiveBranches());
-		String jsonStr = ow.writeValueAsString(properties);
-		return jsonStr;
+		return properties;
 	}
 	
 	@PostMapping("/myCustomerDetails")
