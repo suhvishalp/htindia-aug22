@@ -470,9 +470,21 @@ https://www.linkedin.com/learning/microservices-foundations
                         simultaneous instances of a task definition in an ECS cluster.
                 
 
+
+            - Push docker images to ECR 
+            --------------------------------
+              1. login / authenticate  
+              
                 aws ecr get-login-password | docker login --username AWS --password-stdin 225865359764.dkr.ecr.us-east-1.amazonaws.com
 
-                docker tag visbank/configserver   225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:latest
+                docker tag <<local-image-name>>  <<ECR-Repo-URL>>:<<TAG>>
+                docker tag visbank/configserver   225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:configserver
+                docker tag visbank/eurekaserver   225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:eurekaserver
 
-                docker push  225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:latest
 
+
+                docker push <<ECR-REPO-URL>>:<<TAG>>
+                docker push  225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:configserver
+                docker push  225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:eurekaserver
+
+                
