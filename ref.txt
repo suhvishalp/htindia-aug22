@@ -481,10 +481,91 @@ https://www.linkedin.com/learning/microservices-foundations
                 docker tag visbank/configserver   225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:configserver
                 docker tag visbank/eurekaserver   225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:eurekaserver
 
-
-
                 docker push <<ECR-REPO-URL>>:<<TAG>>
                 docker push  225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:configserver
                 docker push  225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank:eurekaserver
 
-                
+
+–
+
+
+JPA relationships 
+---------------------
+
+        @OneToOne                       - Join-column       EAGER 
+        @ManyToOne                      - join-column                    EAGER 
+
+
+        @`OneToMany`                      - Join_Table            LAZY 
+        @ManyToMany                      - Join_Table           LAZY
+
+
+        A   ---->   B
+
+
+        Dep                     Emp 
+
+
+Making microservices Resilient / Fault Tolerent
+------------------------------------------------
+      Netflix Hystrix                 --> Resilience4j 
+
+
+      - Circuit Breaker : used to stop making requests when a service is down / failing
+      - fallback        : alternative path to failing requests 
+      - Retry           : used to make retries when a service is temporarily down 
+      - Ratelimit       : limit the number of calls / requests that a service can handle 
+      - bulkhead        : limit the number of outgoing concurrent requests to a service to avoid overloading 
+      
+         
+
+    - accounts      ---> /getCustomerDetails
+
+            |-->accountdb
+            |------> loans ---> loansdb
+            |------> cards ---> cardsdb 
+
+
+            Netflix Ribbon                  --> Spring Cloud Load Balancer 
+
+            Netflix Hystrix                 --> Resilience4j 
+
+            Zuul API Gateway                --> Spring Cloud Gateway 
+
+            Netflix Eureka                  --> spring cloud Eureka 
+
+
+
+
+
+
+
+            1. add below dependencies to pom.xml (accounts service) 
+
+                    	<dependency>
+                            <groupId>org.springframework.cloud</groupId>
+                            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-starter-aop</artifactId>
+                            <version>2.7.2</version>
+                        </dependency>
+
+
+            2. add the @CircuitBreaker to the apiend point you want to implement the circuit breaking pattern 
+
+
+                @CircuitBreaker(name="customerDetailsInAccountsService")
+                    public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
+                    
+
+            3. configure threshold / add below properties in application.properties files 
+
+                    resilience4j.circuitbreaker.configs.defaults.register-health-indicator=true
+                    resilience4j.circuitbreaker.instances.customerDetailsInAccountsService.minimumNumberOfCalls=5
+                    resilience4j.circuitbreaker.instances.customerDetailsInAccountsService.failure-rate-threshold=50
+                    resilience4j.circuitbreaker.instances.customerDetailsInAccountsService.wait-duration-in-open-state=30000
+                    resilience4j.circuitbreaker.instances.customerDetailsInAccountsService.permitted-number-of-calls-in-half-open-state=2
+
+

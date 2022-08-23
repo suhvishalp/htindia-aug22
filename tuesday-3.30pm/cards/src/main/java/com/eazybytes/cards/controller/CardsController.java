@@ -36,6 +36,7 @@ public class CardsController {
 
 	@PostMapping("/myCards")
 	public List<Cards> getCardDetails(@RequestBody Customer customer) {
+		System.out.println("Cards Service gettting myCards Details");
 		List<Cards> cards = cardsRepository.findByCustomerId(customer.getCustomerId());
 		if (cards != null) {
 			return cards;
