@@ -587,7 +587,8 @@ Making microservices Resilient / Fault Tolerent
 
             Steps 
             ------
-              A. Create a Code Commit repo and push your code 
+              A. Create a Code Commit repo and push your code along with appropriate configuration 
+                    i.e. buildspec.yml 
 
               B. Create a CodeBuild project with appropriate ServiceRole to perform
                         **the source code must have appropriate "buildspec.yml" file 
@@ -602,3 +603,6 @@ Making microservices Resilient / Fault Tolerent
 
                     4. Create a task definition 
                             --> containername -- imagename 
+
+
+                REF : https://docs.aws.amazon.com/codepipeline/latest/userguide/ecs-cd-pipeline.html
