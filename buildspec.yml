@@ -1,24 +1,28 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo Nothing to do in the install phase...
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 225865359764.dkr.ecr.us-east-1.amazonaws.com
+      - REPOSITORY_URI=225865359764.dkr.ecr.us-east-1.amazonaws.com/visbank
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
       - echo Build started on `date`
+      - echo Building the Docker image...
       - mvn install
+      - mvn spring-boot:build-image
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"config-server","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
-  files:
-    - 'target/movie-service.war'
-    - 'appspec.yml'
-    - 'scripts/before_install.sh'
-    - 'scripts/after_install.sh'
-    - 'scripts/start_server.sh'
-    - 'scripts/stop_server.sh'    
+    files: imagedefinitions.json
