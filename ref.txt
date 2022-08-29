@@ -591,6 +591,9 @@ Making microservices Resilient / Fault Tolerent
                     i.e. buildspec.yml 
 
               B. Create a CodeBuild project with appropriate ServiceRole to perform
+                        **sevice role name : codebuild-bank-config-server-build-project-service-role
+                                                - edit this role and assign below permissions 
+                                                
                         **the source code must have appropriate "buildspec.yml" file 
 
                     1. compile the project              ---                     // mvn install 
@@ -606,3 +609,88 @@ Making microservices Resilient / Fault Tolerent
 
 
                 REF : https://docs.aws.amazon.com/codepipeline/latest/userguide/ecs-cd-pipeline.html
+
+
+OAuth2 / SAML / OpenID Connect 
+
+
+ OAuth2 Framework 
+    - standard / specifiation for implement security in applications 
+
+ OAuth2 Implementations / Providers 
+    - KeyClock 
+    - OKTA 
+    - AWS Cognito 
+    - Azure AD 
+    - 
+
+OAuth2 Grant Flow types 
+--------------------------
+    - REF : https://oauth.net/2/grant-types/
+
+    - Client Credential Grant Flow
+            - The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user.
+            - This is typically used by clients to access resources about themselves rather than to access a user's resources. 
+
+    - Authorization Grant Flow 
+
+
+    1. setup / start authorization server i.e. keyclock server 
+
+          a. run keyclock server 
+                  docker run -p 7080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:19.0.1 start-dev
+          b. login to localhost:7080 keyclock server with username - admin password - admin 
+          c. create a Realm - MyRealm 
+          d. create a new client 
+                - ClientID 
+                - Client authentication : ON 
+                - Standard flow : ON 
+                - Direct access grants : ON 
+                - Service Account Roles : ON 
+
+          e. note the client-secret from "Credentials" tab
+
+                        client_id = "easybank-callcenter"
+                        client_secret   = "82IjeV5nQ44Jd8aexv95f2gEUrbJq7i4"
+                        scope           = openid
+                        grant_type      = client_credentials
+
+          f. observe the endpoints exposed by keyclock auth server 
+
+               http://localhost:7080/realms/MyRealm/.well-known/openid-configuration
+
+        "token_endpoint": "http://localhost:7080/realms/MyRealm/protocol/openid-connect/token",
+
+
+  API_Gateway Implmentation for Security 
+  ------------------------------------------
+    1. add below dependencies 
+            	<dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </dependency>
+                <dependency>
+                <dependency>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-oauth2-client</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-oauth2-jose</artifactId>
+                </dependency>
+
+
+
+
+    1. Spring boot, actuator
+    2. Spring DATA JPA, REST API 
+    3. Config Server & Eureka Server 
+    4. Making microservices resilient 
+    5. Docker, Docker Compose
+    6. AWS CICD - CodeCommit, CodeBuild, CodePipeline 
+    7. AWS ECS, Containerization 
+    8. API Gateway & Security 
