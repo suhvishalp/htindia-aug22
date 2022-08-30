@@ -694,3 +694,89 @@ OAuth2 Grant Flow types
     6. AWS CICD - CodeCommit, CodeBuild, CodePipeline 
     7. AWS ECS, Containerization 
     8. API Gateway & Security 
+
+
+
+
+
+    1. start keyclock auth server 
+
+    2. register apigateway as a client in keyclock server 
+            - client authentication : ON 
+            - standard flow : ON 
+            - Direct access grants : ON 
+
+                    client_id   = easybank-apigateway
+                    client_secret = eISNBR3ne7jJ3kkjYlQiXX6whG0VgtA9
+                    grant_type  = authorization_code
+
+    3. Create a new end user 
+            - create a new Realm Role "AccountHolder" and assign it to the new user 
+
+    4. make appropriate changes in accounts service to secure some apiend points for registered user only 
+
+            a. add below dependencies to accounts/pom.xml 
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-jose -->
+                <dependency>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-oauth2-jose</artifactId>
+                </dependency>
+
+        b. create a custom security filter 
+
+
+                    import org.springframework.context.annotation.Bean;
+                    import org.springframework.context.annotation.Configuration;
+                    import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+                    import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+                    import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+                    import org.springframework.security.web.SecurityFilterChain;
+
+                    @Configuration
+                    @EnableWebSecurity
+                    public class SecurityConfig {
+
+                        @Bean
+                        public SecurityFilterChain web(HttpSecurity http) throws Exception {
+                            JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+                            jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+
+                            http.authorizeRequests(authorize -> authorize.antMatchers("/sayHello").hasRole("ACCOUNTS")
+                                            .anyRequest().authenticated())
+                                    .oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
+                            http.csrf().disable();
+                            return http.build();
+                        }
+                    }
+
+
+
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+
+public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>>{
+
+    @Override
+    public Collection<GrantedAuthority> convert(Jwt jwt) {
+        Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().get("realm_access");
+        if (realmAccess == null || realmAccess.isEmpty()) {
+            return new ArrayList<>();
+        }
+        Collection<GrantedAuthority> returnValue = ((List<String>) realmAccess.get("roles"))
+                .stream().map(roleName -> "ROLE_" + roleName)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        return returnValue;
+    }
+}
